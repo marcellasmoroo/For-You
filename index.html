@@ -171,22 +171,6 @@
             border: 2px solid #ff69b4;
         }
 
-        /* --- Heart Animation --- */
-        .heart {
-            position: absolute;
-            color: #ff69b4;
-            font-size: 25px;
-            pointer-events: none;
-            animation: fadeOut 1.5s linear forwards;
-            z-index: 1000;
-            text-shadow: 0 0 10px #ff1493, 0 0 20px #ff1493;
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(30px) scale(0.5); }
-        }
-
         /* --- Utility Classes --- */
         .hidden {
             display: none !important;
@@ -208,18 +192,8 @@
     <!-- Page 2: Date Planning -->
     <div id="page2" class="container hidden">
         <h1>Yay! Let's plan our date! 🥰</h1>
-        <p>When and where should we go?</p>
+        <p>What activity do you want?</p>
         
-        <div class="form-group">
-            <label>Date:</label>
-            <input type="date" id="dateInput">
-        </div>
-
-        <div class="form-group">
-            <label>Time:</label>
-            <input type="time" id="timeInput">
-        </div>
-
         <label>Activity:</label>
         <div class="activity-options">
             <div class="activity-card" onclick="selectActivity(this, 'BXSea')">
@@ -240,30 +214,14 @@
     <div id="page3" class="container hidden">
         <h1>It's Official! For You 💖</h1>
         <div class="result-card">
-            <h2>Our Date Schedule</h2>
+            <h2>Our Date Activity</h2>
             <img id="activityImage" class="activity-image" src="" alt="Activity">
-            <div class="result-detail">📅 <strong>Date:</strong> <span id="resDate"></span></div>
-            <div class="result-detail">⏰ <strong>Time:</strong> <span id="resTime"></span></div>
-            <div class="result-detail">📍 <strong>Activity:</strong> <span id="resActivity"></span></div>
+            <div class="result-detail📍 <strong>Activity:</strong> <span id="resActivity"></span></div>
             <p style="margin-top: 20px; color: #ff1493;">I can't wait! ❤️</p>
         </div>
     </div>
 
     <script>
-        // --- Heart Trail Animation ---
-        document.addEventListener('mousemove', function(e) {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = e.pageX + 'px';
-            heart.style.top = e.pageY + 'px';
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 1000);
-        });
-
         // --- Page Navigation Logic ---
         function goToPage2() {
             document.getElementById('page1').classList.add('hidden');
@@ -271,14 +229,7 @@
         }
 
         function goToPage3() {
-            const dateVal = document.getElementById('dateInput').value;
-            const timeVal = document.getElementById('timeInput').value;
             const activityVal = selectedActivity || 'Unknown';
-
-            if(!dateVal || !timeVal) {
-                alert("Please pick a date and time first! 🥺");
-                return;
-            }
 
             if(!activityVal || activityVal === 'Unknown') {
                 alert("Please select an activity first! 🥺");
@@ -293,8 +244,6 @@
                 activityImage.src = "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=200&q=80";
             }
 
-            document.getElementById('resDate').innerText = dateVal;
-            document.getElementById('resTime').innerText = timeVal;
             document.getElementById('resActivity').innerText = activityVal;
 
             document.getElementById('page2').classList.add('hidden');
