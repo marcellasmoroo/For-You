@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You </title>
+    <title>For You</title>
     <style>
         /* --- General Styles --- */
         @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700&display=swap');
@@ -174,17 +174,17 @@
         /* --- Heart Animation --- */
         .heart {
             position: absolute;
-            color: #ff1493;
-            font-size: 20px;
+            color: #ff69b4;
+            font-size: 25px;
             pointer-events: none;
-            animation: fadeOut 1s linear forwards;
-            z-index: 1;
-            text-shadow: 0 0 5px #ff69b4;
+            animation: fadeOut 1.5s linear forwards;
+            z-index: 1000;
+            text-shadow: 0 0 10px #ff1493, 0 0 20px #ff1493;
         }
 
         @keyframes fadeOut {
             0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(20px) scale(0.5); }
+            100% { opacity: 0; transform: translateY(30px) scale(0.5); }
         }
 
         /* --- Utility Classes --- */
@@ -197,7 +197,7 @@
 
     <!-- Page 1: The Question -->
     <div id="page1" class="container">
-        <h1>Hey beautiful... ❤️</h1>
+        <h1>Hey beautiful... For You ❤️</h1>
         <p>Will you be my girlfriend?</p>
         <div class="btn-group">
             <button class="btn-yes" onclick="goToPage2()">Yes I do</button>
@@ -238,7 +238,7 @@
 
     <!-- Page 3: The Schedule -->
     <div id="page3" class="container hidden">
-        <h1>It's Official! 💖</h1>
+        <h1>It's Official! For You 💖</h1>
         <div class="result-card">
             <h2>Our Date Schedule</h2>
             <img id="activityImage" class="activity-image" src="" alt="Activity">
