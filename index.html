@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        /* --- General Styles --- */
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ff69b4;
+        }
+
+        /* --- Container for Pages --- */
+        .container {
+            text-align: center;
+            background: rgba(30, 30, 30, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.3);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            z-index: 10;
+            border: 2px solid #ff1493;
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ff1493;
+            text-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+        }
+
+        /* --- Buttons --- */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 60px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-family: 'Nunito', sans-serif;
+            font-weight: bold;
+        }
+
+        .btn-yes {
+            background-color: #ff1493;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.6);
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.05);
+            background-color: #c71585;
+        }
+
+        .btn-no {
+            background-color: #444;
+            color: #aaa;
+            border: 1px solid #666;
+            position: relative;
+        }
+
+        /* --- Page 2: Date Picker --- */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ff69b4;
+        }
+
+        input[type="date"], input[type="time"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box;
+            background-color: #222;
+            color: white;
+        }
+
+        #dateInput::-webkit-calendar-picker-indicator,
+        #timeInput::-webkit-calendar-picker-indicator {
+            filter: invert(1) brightness(2);
+        }
+
+        .activity-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .activity-card {
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            width: 100px;
+            transition: all 0.3s;
+            background-color: #222;
+        }
+
+        .activity-card img {
+            width: 100%;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .activity-card.selected {
+            background-color: #33001a;
+            border-color: #ff1493;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+        }
+
+        /* --- Page 3: Result Card --- */
+        .result-card {
+            background: #2a0a15;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px dashed #ff69b4;
+        }
+        
+        .result-detail {
+            font-size: 1.1rem;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .activity-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid #ff69b4;
+        }
+
+        /* --- Heart Animation --- */
+        .heart {
+            position: absolute;
+            color: #ff1493;
+            font-size: 20px;
+            pointer-events: none;
+            animation: fadeOut 1s linear forwards;
+            z-index: 1;
+            text-shadow: 0 0 5px #ff69b4;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(20px) scale(0.5); }
+        }
+
+        /* --- Utility Classes --- */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Page 1: The Question -->
+    <div id="page1" class="container">
+        <h1>Hey beautiful... ❤️</h1>
+        <p>Will you be my girlfriend?</p>
+        <div class="btn-group">
+            <button class="btn-yes" onclick="goToPage2()">Yes I do</button>
+            <button id="btnNo" class="btn-no">No, leave me alone</button>
+        </div>
+    </div>
+
+    <!-- Page 2: Date Planning -->
+    <div id="page2" class="container hidden">
+        <h1>Yay! Let's plan our date! 🥰</h1>
+        <p>When and where should we go?</p>
+        
+        <div class="form-group">
+            <label>Date:</label>
+            <input type="date" id="dateInput">
+        </div>
+
+        <div class="form-group">
+            <label>Time:</label>
+            <input type="time" id="timeInput">
+        </div>
+
+        <label>Activity:</label>
+        <div class="activity-options">
+            <div class="activity-card" onclick="selectActivity(this, 'BXSea')">
+                <img src="https://ik.imagekit.io/tvlk/xpe-asset/AyJ40ZAo1DOyPyKLZ9c3RGQHTP2oT4ZXW+QmPVVkFQiXFSv42UaHGzSmaSzQ8DO5QIbWPZuF+VkYVRk6gh-Vg4ECbfuQRQ4pHjWJ5Rmbtkk=/6924904913855/BXSea-3ced62d2-5e7e-4791-86ae-39eab311825a.jpeg?_src=imagekit&tr=dpr-2,c-at_max,h-500,q-60,w-740" alt="BXSea">
+                <div>BXSea</div>
+            </div>
+
+            <div class="activity-card" onclick="selectActivity(this, 'Movie')">
+                <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=200&q=80" alt="Movie">
+                <div>Movie</div>
+            </div>
+        </div>
+
+        <button class="btn-yes" style="width: 100%" onclick="goToPage3()">Continue</button>
+    </div>
+
+    <!-- Page 3: The Schedule -->
+    <div id="page3" class="container hidden">
+        <h1>It's Official! 💖</h1>
+        <div class="result-card">
+            <h2>Our Date Schedule</h2>
+            <img id="activityImage" class="activity-image" src="" alt="Activity">
+            <div class="result-detail">📅 <strong>Date:</strong> <span id="resDate"></span></div>
+            <div class="result-detail">⏰ <strong>Time:</strong> <span id="resTime"></span></div>
+            <div class="result-detail">📍 <strong>Activity:</strong> <span id="resActivity"></span></div>
+            <p style="margin-top: 20px; color: #ff1493;">I can't wait! ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        // --- Heart Trail Animation ---
+        document.addEventListener('mousemove', function(e) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = e.pageX + 'px';
+            heart.style.top = e.pageY + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 1000);
+        });
+
+        // --- Page Navigation Logic ---
+        function goToPage2() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+        }
+
+        function goToPage3() {
+            const dateVal = document.getElementById('dateInput').value;
+            const timeVal = document.getElementById('timeInput').value;
+            const activityVal = selectedActivity || 'Unknown';
+
+            if(!dateVal || !timeVal) {
+                alert("Please pick a date and time first! 🥺");
+                return;
+            }
+
+            if(!activityVal || activityVal === 'Unknown') {
+                alert("Please select an activity first! 🥺");
+                return;
+            }
+
+            // Set activity image
+            const activityImage = document.getElementById('activityImage');
+            if(activityVal === 'BXSea') {
+                activityImage.src = "https://ik.imagekit.io/tvlk/xpe-asset/AyJ40ZAo1DOyPyKLZ9c3RGQHTP2oT4ZXW+QmPVVkFQiXFSv42UaHGzSmaSzQ8DO5QIbWPZuF+VkYVRk6gh-Vg4ECbfuQRQ4pHjWJ5Rmbtkk=/6924904913855/BXSea-3ced62d2-5e7e-4791-86ae-39eab311825a.jpeg?_src=imagekit&tr=dpr-2,c-at_max,h-500,q-60,w-740";
+            } else if(activityVal === 'Movie') {
+                activityImage.src = "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=200&q=80";
+            }
+
+            document.getElementById('resDate').innerText = dateVal;
+            document.getElementById('resTime').innerText = timeVal;
+            document.getElementById('resActivity').innerText = activityVal;
+
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.remove('hidden');
+        }
+
+        // --- "No" Button Logic (Run Away) - STRICT BOUNDARY ---
+        const btnNo = document.getElementById('btnNo');
+        
+        // Fungsi deteksi mobile
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Fungsi untuk memindahkan tombol (STRICT BOUNDARY)
+        function moveButton() {
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            
+            // Ukuran tombol
+            const btnWidth = 150;
+            const btnHeight = 50;
+            
+            // Padding ketat biar gak keluar container
+            const padding = 15;
+            
+            // Hitung area yang aman (tetap di dalam container)
+            const safeWidth = containerRect.width - btnWidth - (padding * 2);
+            const safeHeight = containerRect.height - btnHeight - (padding * 2);
+            
+            // Pastikan gak negatif
+            const maxX = Math.max(safeWidth, 0);
+            const maxY = Math.max(safeHeight, 0);
+
+            const randomX = Math.floor(Math.random() * maxX) + padding;
+            const randomY = Math.floor(Math.random() * maxY) + padding;
+
+            btnNo.style.position = 'absolute';
+            btnNo.style.left = randomX + 'px';
+            btnNo.style.top = randomY + 'px';
+            btnNo.style.transform = 'none';
+            btnNo.style.zIndex = '100';
+        }
+
+        // Desktop: Hover
+        btnNo.addEventListener('mouseover', moveButton);
+        
+        // Mobile: Touch & Click (lebih responsif)
+        btnNo.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            moveButton();
+        });
+        
+        btnNo.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            moveButton();
+        });
+
+        // --- Activity Selection Logic ---
+        let selectedActivity = null;
+
+        function selectActivity(element, activityName) {
+            document.querySelectorAll('.activity-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            element.classList.add('selected');
+            selectedActivity = activityName;
+        }
+    </script>
+</body>
+</html>
